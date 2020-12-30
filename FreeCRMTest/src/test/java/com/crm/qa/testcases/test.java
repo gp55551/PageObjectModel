@@ -1,6 +1,7 @@
 package com.crm.qa.testcases;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -25,11 +26,12 @@ public class test extends TestBase {
 	private WebDriver driver; 
 	String URL = "http://google.com";
 
-	@BeforeClass
+	@BeforeMethod
 	public void testSetUp() {
 		
-		driver = new FirefoxDriver();
-	}
+		System.setProperty("webdriver.chrome.driver",
+				System.getProperty("user.dir") + "/ChromeDriver/chromedriver");
+		driver = new ChromeDriver();	}
 	
 	@Test
 	public void verifyGooglePageTittle() {
@@ -38,7 +40,7 @@ public class test extends TestBase {
 		Assert.assertEquals(getTitle, "Google");
 	}
 	
-	@AfterClass
+	@AfterMethod
 	public void tearDown() {
 		driver.quit();
 	}
