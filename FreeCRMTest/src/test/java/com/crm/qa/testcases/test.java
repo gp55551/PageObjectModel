@@ -1,7 +1,11 @@
 package com.crm.qa.testcases;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -17,38 +21,34 @@ public class test extends TestBase {
 	TestUtil testUtil;
 	ContactsPage contactsPage;
 
-	public test() {
-		super();
-	}
+	
+	private WebDriver driver; 
+	String URL = "http://google.com";
 
-	//test cases should be separated -- independent with each other
-	//before each test case -- launch the browser and login
-	//@test -- execute test case
-	//after each test case -- close the browser
-	
-	@BeforeMethod
-	public void setUp() {
-		initialization();
-		testUtil = new TestUtil();
-		contactsPage = new ContactsPage();
-		loginPage = new LoginPage();
+	@BeforeClass
+	public void testSetUp() {
+		
+		driver = new FirefoxDriver();
 	}
 	
-	
-	@Test(priority=1)
-	public void verifyHomePageTitleTest(){
-		String homePageTitle = homePage.verifyHomePageTitle();
-		Assert.assertEquals(homePageTitle, "CRMPRO","Home page title not matched");
+	@Test
+	public void verifyGooglePageTittle() {
+		driver.navigate().to(URL);
+		String getTitle = driver.getTitle();
+		Assert.assertEquals(getTitle, "Google");
 	}
 	
-
-	
-	
-	
-	@AfterMethod
-	public void tearDown(){
+	@AfterClass
+	public void tearDown() {
 		driver.quit();
 	}
+	
+	
+
+	
+	
+	
+	
 	
 	
 
